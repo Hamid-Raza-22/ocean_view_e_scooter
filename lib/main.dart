@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +10,10 @@ import 'Screens/singup_screen.dart';
 import 'Screens/splesh_screen.dart';
 import 'Screens/transaction_history_screen.dart';
 
-void main() {
+
+Future<void> main() async {
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {

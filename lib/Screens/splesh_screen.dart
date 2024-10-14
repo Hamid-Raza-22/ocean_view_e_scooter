@@ -32,7 +32,7 @@ class SplashScreenState extends State<SplashScreen>
 
     // Navigate to home page after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offNamed('/home');
+      Get.offNamed('/getStarted');
     });
   }
 
