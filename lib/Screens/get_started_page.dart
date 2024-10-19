@@ -158,7 +158,7 @@ class GetStartedPageState extends State<GetStartedPage> with TickerProviderState
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to LoginScreen when tapped
-                    Get.offNamed('/home');
+                    Get.offNamed('/login');
                   },
                   child: Stack(
                     alignment: Alignment.bottomRight,

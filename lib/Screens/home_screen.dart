@@ -142,13 +142,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   title: 'GT Spot',
                   price: '\$0.30',
                   speed: '46 km/h',
-                ),
+                  onTap: () {Get.offNamed('/scooters');}
+
+
+                    ),
                 SizedBox(width: 15),
                 _buildScooterOption(
                   imagePath: 'assets/images/grayEBike.png',
                   title: 'GT Spot Pro',
                   price: '\$0.40',
                   speed: '50 km/h',
+                    onTap: () {Get.offNamed('/GTSLscooters');}
+
                 ),
               ],
             ),
@@ -210,59 +215,64 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     required String title,
     required String price,
     required String speed,
+    required VoidCallback onTap, // Add this parameter
   }) {
-    return Container(
-      width: 160,
-      height: 220,
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.green, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 5,
-            offset: Offset(3, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(imagePath, width: 140, height: 100),
-          SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+    return GestureDetector(
+      onTap: onTap, // Handle the tap event
+      child: Container(
+        width: 160,
+        height: 220,
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.green, width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              blurRadius: 5,
+              offset: Offset(3, 3),
             ),
-          ),
-          SizedBox(height: 5),
-          Text(
-            'Per min: $price',
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 14,
-              color: Colors.white70,
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(imagePath, width: 140, height: 100),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-          ),
-          SizedBox(height: 5),
-          Text(
-            'Speed: $speed',
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 14,
-              color: Colors.white70,
+            SizedBox(height: 5),
+            Text(
+              'Per min: $price',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 14,
+                color: Colors.white70,
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 5),
+            Text(
+              'Speed: $speed',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 14,
+                color: Colors.white70,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;

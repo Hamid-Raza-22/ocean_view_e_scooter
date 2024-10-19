@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Screens/GT_SL_scooter.dart';
 import 'Screens/account_setting.dart';
 import 'Screens/get_started_page.dart';
 import 'Screens/home_screen.dart';
 import 'Screens/login_screen.dart';
+import 'Screens/scooters_screen.dart';
 import 'Screens/singup_screen.dart';
 import 'Screens/splesh_screen.dart';
 import 'Screens/transaction_history_screen.dart';
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/transactionHistory', page: () => TransactionHistory()),
         GetPage(name: '/accountSetting', page: () => AccountSetting()),
         GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/scooters', page: () => ScootersScreen()),
+        GetPage(name: '/GTSLscooters', page: () => GTSLScootersScreen()),
 
       ],
     );
