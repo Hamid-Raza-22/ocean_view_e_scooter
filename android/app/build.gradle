@@ -6,7 +6,7 @@ plugins {
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
-    id("com.google.gms.google-services")
+    id "com.google.gms.google-services"
 }
 
 android {
@@ -43,6 +43,7 @@ flutter {
 }
 
 dependencies {
+
     // Add this line for Google Maps
     implementation 'com.google.android.gms:play-services-maps:19.0.0'
     // If you're using location services, you might also need:

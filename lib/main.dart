@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ocean_view_e_scooters/Screens/AdminDashboard/admin_panel.dart';
+// import 'package:ocean_view_e_scooters/Screens/qr_screen.dart';
 
 import 'Screens/GT_SL_scooter.dart';
 import 'Screens/account_setting.dart';
@@ -14,6 +15,7 @@ import 'Screens/singup_screen.dart';
 import 'Screens/splesh_screen.dart';
 import 'Screens/transaction_history_screen.dart';
 import 'Services/FirebaseServices/firebase_options.dart';
+ import 'Views/Screens/qr_screen.dart';
 
 
 Future<void> main() async {
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/scooters', page: () => ScootersScreen()),
         GetPage(name: '/GTSLscooters', page: () => GTSLScootersScreen()),
+        GetPage(name: '/QrScreen', page: () => QrScreen()),
 
       ],
     );

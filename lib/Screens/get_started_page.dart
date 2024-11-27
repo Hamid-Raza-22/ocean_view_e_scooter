@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ocean_view_e_scooters/Designs/arrow_painter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({super.key});
@@ -155,12 +157,31 @@ class GetStartedPageState extends State<GetStartedPage> with TickerProviderState
               // Scale animation for "Get Started" button
               ScaleTransition(
                 scale: _buttonAnimation,
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigate to LoginScreen when tapped
-                    Get.offNamed('/adminPanel');
+                child:GestureDetector(
+                  onTap: () async {
+                    // Request camera permission
+                    final status = await Permission.camera.request();
+
+                    if (status.isGranted) {
+                      try {
+                        // Get the list of available cameras
+                        final cameras = await availableCameras();
+                        if (cameras.isNotEmpty) {
+                          // Navigate to QrScreen with the camera
+                          Get.offNamed('/QrScreen', arguments: cameras[0]);
+                        } else {
+                          Get.snackbar("Error", "No cameras available");
+                        }
+                      } catch (e) {
+                        Get.snackbar("Error", "Failed to initialize camera: $e");
+                      }
+                    } else {
+                      Get.snackbar("Permission Denied", "Camera permission is required to proceed.");
+                    }
                   },
-                  child: Stack(
+
+
+                child: Stack(
                     alignment: Alignment.bottomRight,
                     children: [
                       // Rectangle Button with improved layout and padding
