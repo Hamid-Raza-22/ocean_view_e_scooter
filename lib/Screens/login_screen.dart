@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,11 +22,9 @@ class LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin 
   String _email = ''; // To store user input for email
   String _password = ''; // To store user input for password
 
-  final List<Map<String, String>> validCredentials = [
-    {"email": "oceanview@escooter.com", "password": "ocean123"},
-    // Add more valid credentials as needed
-  ];
-
+  bool isValid = false;
+  bool isAdmin = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance; // Initialize FirebaseAuth
   @override
   void initState() {
     super.initState();
@@ -77,39 +76,51 @@ class LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin 
     super.dispose();
   }
 
-  void _validateInputs() {
+  final List<Map<String, String>> validCredentials = [
+    {"email": "oceanview@escooter.com", "password": "ocean123"},
+    {"email": "adminhamid@escooter.com", "password": "admin123"}, // Add admin credentials here
+    // Add more valid credentials as needed
+  ];
+
+  void _validateInputs() async {
     setState(() {
-      _hasEmailError = false; // Reset email error state
-      _hasPasswordError = false; // Reset password error state
-
-      // Check if the entered email and password match any valid credentials
-      bool isValid = false;
-
-      for (var credential in validCredentials) {
-        if (credential["email"] == _email && credential["password"] == _password) {
-          isValid = true;
-          break;
-        }
-      }
+      _hasEmailError = false;
+      _hasPasswordError = false;
 
       if (_email.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(_email)) {
-        _hasEmailError = true; // Set email error if it's invalid
+        _hasEmailError = true;
       }
       if (_password.isEmpty || _password.length < 6) {
-        _hasPasswordError = true; // Set password error if it's invalid
-      }
-      if (!isValid) {
-        // Set error flags if credentials are not valid
-        _hasEmailError = true;
         _hasPasswordError = true;
       }
     });
+    // Identify admin by email
+    if (_email == "adminhamid@escooter.com" && _password == "admin123") {
+      isAdmin = true;
+    }
+    // Navigate based on user type
+    if (isAdmin == true) {
+      Get.offNamed('/adminPanel'); // Navigate to admin panel
+    } else {
+      if (!_hasEmailError && !_hasPasswordError) {
+        try {
+          UserCredential userCredential = await _auth
+              .signInWithEmailAndPassword(
+            email: _email,
+            password: _password,
+          );
+          Get.offNamed('/home'); // Navigate to user home
 
-    // Only navigate if there are no errors
-    if (!_hasEmailError && !_hasPasswordError) {
-      Get.offNamed('/home'); // Navigate to home if inputs are valid
+        } catch (e) {
+          setState(() {
+            _hasEmailError = true;
+            _hasPasswordError = true;
+          });
+        }
+      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
