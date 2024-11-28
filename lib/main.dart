@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ocean_view_e_scooters/Screens/AdminDashboard/admin_panel.dart';
+import 'package:ocean_view_e_scooters/Screens/report_issues.dart';
+import 'package:ocean_view_e_scooters/Screens/view_profile.dart';
 // import 'package:ocean_view_e_scooters/Screens/qr_screen.dart';
 
 import 'Screens/GT_SL_scooter.dart';
 import 'Screens/account_setting.dart';
+import 'Screens/edit_profile.dart';
 import 'Screens/get_started_page.dart';
 import 'Screens/home_screen.dart';
 import 'Screens/login_screen.dart';
@@ -53,6 +56,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/scooters', page: () => ScootersScreen()),
         GetPage(name: '/GTSLscooters', page: () => GTSLScootersScreen()),
         GetPage(name: '/QrScreen', page: () => QrScreen()),
+        GetPage(name: '/viewProfile', page: () => ViewProfile()),
+        GetPage(name: '/editProfile', page: () => EditProfile()),
+        GetPage(name: '/reportIssues', page: () => ReportIssues()),
 
       ],
     );

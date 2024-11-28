@@ -167,8 +167,11 @@ class GetStartedPageState extends State<GetStartedPage> with TickerProviderState
                         // Get the list of available cameras
                         final cameras = await availableCameras();
                         if (cameras.isNotEmpty) {
+                          //Get.offNamed("/home");
+                          Get.offNamed("/home");
+
                           // Navigate to QrScreen with the camera
-                          Get.offNamed('/QrScreen', arguments: cameras[0]);
+                          //Get.offNamed('/QrScreen', arguments: cameras[0]);
                         } else {
                           Get.snackbar("Error", "No cameras available");
                         }

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ocean_view_e_scooters/Screens/Components/custom_manu_option.dart';
+import 'package:ocean_view_e_scooters/Utilities/global_variables.dart';
+
+import 'Components/custom_bottom_sheet.dart';
+import 'Components/custom_button.dart';
+import 'menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -38,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Future<void> _loadMarkers() async {
     final BitmapDescriptor markerIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(size: Size(48, 48)),
-      'assets/images/markerEBike.png',
+      markerEBike,
     );
 
     setState(() {
@@ -82,6 +88,81 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         return _buildScooterModal();
       },
     );
+  }  void _showReports() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return CustomManuOption(title: "Report", onTap: () => Get.offNamed("/reportIssues"),);
+      },
+    );
+  }
+  Widget _buildReportModal() {
+    return Container(
+      width: double.infinity,
+      height: 430, // Or any value suitable for your screen size
+      decoration: BoxDecoration(
+        // gradient: LinearGradient(
+        //   colors: [Color(0xFF00E276), Color(0xFF007A3D)],
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        // ),
+        color: Colors.black45,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50), // Optional to make both corners rounded
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 6,
+            spreadRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Line separator
+            Container(
+              width: 50,
+              height: 4,
+              margin: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            SizedBox(height: 20),
+            // Title Text
+            Text(
+              "Quick support",
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 25),
+            // Scooter Options
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+             CustomManuOption(title: "title", onTap: () => Get.offNamed("/reportIssues")),
+                SizedBox(width: 15),
+
+              ],
+            ),
+            SizedBox(height: 20),
+
+            //SizedBox(height: 20), // Space to avoid overflow
+          ],
+        ),
+      ),
+    );
   }
   Widget _buildScooterModal() {
     return Container(
@@ -96,8 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         color: Colors.black45,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(50),
-          topRight: Radius.circular(
-              50), // Optional to make both corners rounded
+          topRight: Radius.circular(50), // Optional to make both corners rounded
         ),
         boxShadow: [
           BoxShadow(
@@ -138,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildScooterOption(
-                  imagePath: 'assets/images/orangeEBike.png',
+                  imagePath: orangeEBike,
                   title: 'GT Spot',
                   price: '\$0.30',
                   speed: '46 km/h',
@@ -148,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                 SizedBox(width: 15),
                 _buildScooterOption(
-                  imagePath: 'assets/images/grayEBike.png',
+                  imagePath: grayEBike,
                   title: 'GT Spot Pro',
                   price: '\$0.40',
                   speed: '50 km/h',
@@ -175,6 +255,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   // Unlock Button
                   ElevatedButton(
                     onPressed: () {
+                      Get.offNamed("/QrScreen");
                       // Unlock action
                     },
                     style: ElevatedButton.styleFrom(
@@ -331,13 +412,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   height: 50,
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.white54,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 10,
-                        offset: Offset(0, 4),
+                        offset: Offset(0,4 ),
                       ),
                     ],
                   ),
@@ -347,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       Text(
                         '25°C',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black38,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -365,182 +446,92 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ],
             ),
           ),
-          // Floating Scan Button with Background Gradient
           Positioned(
-            bottom: 20,
-            left: MediaQuery
-                .of(context)
-                .size
-                .width / 2 - 40,
-            child: FloatingActionButton.extended(
-              onPressed: () {},
-              icon: Icon(Icons.qr_code_scanner),
-              label: Text('Scan'),
-              backgroundColor: Colors.blueGrey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+            bottom: MediaQuery.of(context).size.height * 0.15,
+            left: MediaQuery.of(context).size.width * 0.75,
+            right: MediaQuery.of(context).size.width * 0.08,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.16,
+              height: MediaQuery.of(context).size.height * 0.06,
+              child: CustomButton(
+                icon: Icons.question_mark_rounded,
+                iconSize: 18,
+                iconColor: Colors.black,
+                textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+                gradientColors: const [
+                  Colors.white,
+                  Colors.white,
+                ], // Custom gradient
+                onTap: () {
+                  debugPrint("Navigating to Past Promo Page");
+                  // Get.offNamed('/reportIssues');
+                  // _showReports();
+                  // showModalBottomSheet(
+                  //   context: context,
+                  //   shape: const RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.vertical(
+                  //       top: Radius.circular(15.0),
+                  //     ),
+                  //   ),
+                  //   //builder: (context) => _buildBottomSheetContent(context),
+                  // );
+                },
+                borderRadius: 15.0,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.3),
+                    offset: const Offset(0, 5),
+                    blurRadius: 10,
+                  ),
+                ],
               ),
             ),
           ),
-          // Slide-in Custom Menu
-         // Get.offNamed('/menuScreen'),
-          SlideTransition(
-            position: _offsetAnimation,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Container(
-                    width: 280,
-                    height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15,
-                          spreadRadius: 5,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.arrow_back, color: Colors.black),
-                              onPressed: () {
-                                // Close the menu when "Back" is pressed
-                                setState(() {
-                                  _isMenuVisible = false;
-                                  _controller.reverse();
-                                });
-                              },
-                            ),
 
-                          ],
-                        ),
-                        SizedBox(height: 15),
-                        // Profile Section
-                        Row(
-                          children: [
-
-                            CircleAvatar(
-                              radius: 35,
-                              backgroundImage: AssetImage('assets/images/profile.jpg'),
-                            ),
-                            SizedBox(width: 15),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Matt Scott',
-                                  style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                GestureDetector(
-                                  onTap: () {
-                                    // Navigate to profile page
-                                  },
-                                  child: Text(
-                                    'View Profile',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 14,
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 30),
-                        Divider(color: Colors.grey[300], thickness: 1),
-                        SizedBox(height: 20),
-                        // Scooter and Location Section
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.electric_scooter, color: Colors.blueAccent),
-                                SizedBox(width: 10),
-                                Text(
-                                  '0',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.location_on, color: Colors.redAccent),
-                                SizedBox(width: 10),
-                                Text(
-                                  '0 km',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Divider(color: Colors.grey[300], thickness: 1),
-                        SizedBox(height: 20),
-                        // Menu Items
-                        _buildMenuItem(
-                          icon: Icons.payment,
-                          label: 'Payments',
-                          onTap: () {},
-                        ),
-                        _buildMenuItem(
-                          icon: Icons.history,
-                          label: 'Ride History',
-                          onTap: () {},
-                        ),
-                        _buildMenuItem(
-                          icon: Icons.local_offer,
-                          label: 'Promos',
-                          onTap: () {},
-                        ),
-                        _buildMenuItem(
-                          icon: Icons.card_membership,
-                          label: 'Ride Pass',
-                          onTap: () {},
-                        ),
-                        _buildMenuItem(
-                          icon: Icons.help,
-                          label: 'Help',
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  ),
+          // Floating Scan Button with Background Gradient
+          Positioned(
+            child: CustomButton(
+              bottom: MediaQuery.of(context).size.height * 0.01,
+              top: MediaQuery.of(context).size.height * 0.9,
+              left: MediaQuery.of(context).size.width * 0.05,
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 50,
+              buttonText: 'SCAN',
+              icon: Icons.qr_code_scanner_rounded,
+              iconSize: 40,
+              iconColor: Colors.black,
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+              gradientColors: const [buttonColorGreen, buttonColorGreen], // Custom gradient
+              onTap: () {
+                debugPrint("Navigating to Past Promo Page");
+                Get.offNamed('/QrScreen');
+              },
+              borderRadius: 15.0,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.3),
+                  offset: Offset(0,5),
+                  blurRadius: 10,
                 ),
               ],
             ),
+
           ),
+          // Slide-in Custom Menu
+         // Get.offNamed('/menuScreen'),
+          if (_isMenuVisible)
+            SlideInMenu(
+              isVisible: _isMenuVisible, // Pass the visibility state
+              onClose: () => setState(() => _isMenuVisible = false),
+            ),
 
         ],
       ),
