@@ -15,10 +15,13 @@ class CustomButton extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
-  final IconData? icon; // New parameter for the icon
-  final double? iconSize; // Icon size parameter
-  final Color? iconColor; // Icon color parameter
+  final IconData? icon; // Parameter for icon
+  final double? iconSize; // Icon size
+  final Color? iconColor; // Icon color
+  final Color? iconBackgroundColor; // Icon background color
   final double spacing; // Spacing between icon and text
+  final IconPosition iconPosition; // Icon position (left or right)
+  final TextAlign textAlign; // New parameter for text alignment
 
   const CustomButton({
     super.key,
@@ -39,7 +42,10 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.iconSize = 24.0,
     this.iconColor,
-    this.spacing = 8.0, // Default spacing
+    this.iconBackgroundColor, // Optional icon background color
+    this.spacing = 8.0,
+    this.iconPosition = IconPosition.left, // Default position is left
+    this.textAlign = TextAlign.center, // Default text alignment is center
   });
 
   @override
@@ -63,73 +69,119 @@ class CustomButton extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: boxShadow ??
-                [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    offset: const Offset(0, 4),
-                    blurRadius: 8,
-                  ),
-                ],
+            boxShadow: boxShadow ?? [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                offset: const Offset(0, 4),
+                blurRadius: 8,
+              ),
+            ],
           ),
           child: Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (icon != null) ...[
-                  Icon(
-                    icon,
-                    size: iconSize,
-                    color: iconColor ?? Colors.white,
-                  ),
-                  SizedBox(width: spacing),
-                ],
-            if (buttonText != null) ...[
-                Text(
-                  buttonText,
-                  style: textStyle ??
-                      const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),]
-              ],
+              children: iconPosition == IconPosition.left
+                  ? _buildIconWithTextLeft()
+                  : _buildIconWithTextRight(),
             ),
           ),
         ),
       ),
     );
   }
+
+  List<Widget> _buildIconWithTextLeft() {
+    return [
+      if (icon != null) ...[
+        if (iconBackgroundColor != null)
+          Container(
+            width: 58,
+            height: 48,
+            decoration: BoxDecoration(
+              color: iconBackgroundColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+            ),
+            child: Icon(
+              icon,
+              size: iconSize,
+              color: iconColor ?? Colors.black,
+            ),
+          )
+        else
+          Icon(
+            icon,
+            size: iconSize,
+            color: iconColor ?? Colors.black,
+          ),
+        SizedBox(width: spacing),
+      ],
+      if (buttonText != null)
+        Expanded(
+          child: Text(
+            buttonText,
+            textAlign: textAlign, // Apply the text alignment
+            style: textStyle ??
+                const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+    ];
+  }
+
+  List<Widget> _buildIconWithTextRight() {
+    return [
+      if (buttonText != null)
+        Expanded(
+          child: Text(
+            buttonText,
+            textAlign: textAlign, // Apply the text alignment
+            style: textStyle ??
+                const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      SizedBox(width: spacing),
+      if (icon != null) ...[
+        if (iconBackgroundColor != null)
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: iconBackgroundColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                 topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+            ),
+            child: Icon(
+              icon,
+              size: iconSize,
+              color: iconColor ?? Colors.black,
+            ),
+          )
+        else
+          Icon(
+            icon,
+            size: iconSize,
+            color: iconColor ?? Colors.black,
+          ),
+      ],
+    ];
+  }
 }
 
-
-// CustomButton(
-//   top: MediaQuery.of(context).size.height * 0.8,
-//   left: MediaQuery.of(context).size.width * 0.05,
-//   width: MediaQuery.of(context).size.width * 0.9,
-//   height: 55,
-//   buttonText: 'CONTINUE',
-  // icon: Icons.edit,
-  // iconSize: 16,
-//   // iconColor: Colors.white,
-//   textStyle: const TextStyle(
-//     color: Colors.black,
-//     fontSize: 16,
-//     fontWeight: FontWeight.bold,
-//   ),
-//   gradientColors: const [buttonColorGreen, buttonColorGreen], // Custom gradient
-//   onTap: () {
-//     debugPrint("Navigating to Past Promo Page");
-//     Get.offNamed('/viewProfile');
-//   },
-//   borderRadius: 15.0,
-//   boxShadow: [
-//     BoxShadow(
-//       color: Colors.blue.withOpacity(0.3),
-//       offset: Offset(0,5),
-//       blurRadius: 10,
-//     ),
-//   ],
-// ),
+enum IconPosition { left, right } // Enum for icon position

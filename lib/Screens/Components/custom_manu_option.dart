@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CustomManuOption extends StatelessWidget {
+  final double? top;
+  final double? left;
+  final double? right;
+  final double? bottom;
+  final double? width;
+  final double? height;
   final String title;
   final VoidCallback onTap;
 
   const CustomManuOption({
     super.key,
+    this.top,
+    this.left,
+    this.right,
+    this.bottom,
+    this.width,
+    this.height,
     required this.title,
     required this.onTap,
   });
@@ -15,7 +27,9 @@ class CustomManuOption extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: double.infinity,
+        width: width ?? double.infinity, // Default to full width if not provided
+        height: height ?? 60.0,
+
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(

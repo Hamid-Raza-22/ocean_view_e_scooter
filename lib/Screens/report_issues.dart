@@ -23,27 +23,27 @@ class ReportIssues extends StatelessWidget {
             const SizedBox(height: 60),
             CustomManuOption(
               title: 'Problem Report',
-              onTap: () => Navigator.pushNamed(context, '/accountSettings'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
             CustomManuOption(
               title: 'Suggestion',
-              onTap: () => Navigator.pushNamed(context, '/rideAgreement'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
             CustomManuOption(
               title: 'Accident Report',
-              onTap: () => Navigator.pushNamed(context, '/termsConditions'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
             CustomManuOption(
               title: 'Account Billing',
-              onTap: () => Navigator.pushNamed(context, '/privacyPolicy'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
             CustomManuOption(
               title: 'Refund / Deposit',
-              onTap: () => Navigator.pushNamed(context, '/privacyPolicy'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
             CustomManuOption(
               title: 'Request A parking Zone',
-              onTap: () => Navigator.pushNamed(context, '/privacyPolicy'),
+              onTap: () => Get.offNamed('/submitReportIssues'),
             ),
           ],
         ),

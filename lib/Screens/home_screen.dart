@@ -6,7 +6,6 @@ import 'package:ocean_view_e_scooters/Utilities/global_variables.dart';
 
 import 'Components/custom_bottom_sheet.dart';
 import 'Components/custom_button.dart';
-import 'menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -87,81 +86,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       builder: (BuildContext context) {
         return _buildScooterModal();
       },
-    );
-  }  void _showReports() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return CustomManuOption(title: "Report", onTap: () => Get.offNamed("/reportIssues"),);
-      },
-    );
-  }
-  Widget _buildReportModal() {
-    return Container(
-      width: double.infinity,
-      height: 430, // Or any value suitable for your screen size
-      decoration: BoxDecoration(
-        // gradient: LinearGradient(
-        //   colors: [Color(0xFF00E276), Color(0xFF007A3D)],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
-        color: Colors.black45,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(50),
-          topRight: Radius.circular(50), // Optional to make both corners rounded
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 6,
-            spreadRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Line separator
-            Container(
-              width: 50,
-              height: 4,
-              margin: EdgeInsets.only(top: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            SizedBox(height: 20),
-            // Title Text
-            Text(
-              "Quick support",
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 25),
-            // Scooter Options
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-             CustomManuOption(title: "title", onTap: () => Get.offNamed("/reportIssues")),
-                SizedBox(width: 15),
-
-              ],
-            ),
-            SizedBox(height: 20),
-
-            //SizedBox(height: 20), // Space to avoid overflow
-          ],
-        ),
-      ),
     );
   }
   Widget _buildScooterModal() {
@@ -469,16 +393,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 onTap: () {
                   debugPrint("Navigating to Past Promo Page");
                   // Get.offNamed('/reportIssues');
-                  // _showReports();
-                  // showModalBottomSheet(
-                  //   context: context,
-                  //   shape: const RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.vertical(
-                  //       top: Radius.circular(15.0),
-                  //     ),
-                  //   ),
-                  //   //builder: (context) => _buildBottomSheetContent(context),
-                  // );
+                 // _showReports();
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.white,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(15.0),
+                      ),
+                    ),
+                    builder: (context) => _buildBottomSheetContent(context),
+                  );
                 },
                 borderRadius: 15.0,
                 boxShadow: [
@@ -503,6 +428,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               buttonText: 'SCAN',
               icon: Icons.qr_code_scanner_rounded,
               iconSize: 40,
+              iconPosition: IconPosition.right,
+              spacing: 0,
               iconColor: Colors.black,
               textStyle: const TextStyle(
                 color: Colors.black,
@@ -527,15 +454,265 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           // Slide-in Custom Menu
          // Get.offNamed('/menuScreen'),
-          if (_isMenuVisible)
-            SlideInMenu(
-              isVisible: _isMenuVisible, // Pass the visibility state
-              onClose: () => setState(() => _isMenuVisible = false),
+          SlideTransition(
+            position: _offsetAnimation,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    width: 280,
+                    height: MediaQuery.of(context).size.height,
+                    padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 15,
+                          spreadRadius: 5,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.arrow_back, color: Colors.black),
+                              onPressed: () {
+                                // Close the menu when "Back" is pressed
+                                setState(() {
+                                  _isMenuVisible = false;
+                                  _controller.reverse();
+                                });
+                              },
+                            ),
+
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        // Profile Section
+                        Row(
+                          children: [
+
+                            CircleAvatar(
+                              radius: 35,
+                              backgroundImage: AssetImage(hamidImage),
+                            ),
+                            SizedBox(width: 15),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Matt Scott',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed("/viewProfile");
+                                    // Navigate to profile page
+                                  },
+                                  child: Text(
+                                    'View Profile',
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 14,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Divider(color: Colors.grey[300], thickness: 1),
+                        SizedBox(height: 20),
+                        // Scooter and Location Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.electric_scooter, color: Colors.blueAccent),
+                                SizedBox(width: 10),
+                                Text(
+                                  '0',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(Icons.location_on, color: Colors.redAccent),
+                                SizedBox(width: 10),
+                                Text(
+                                  '0 km',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Divider(color: Colors.grey[300], thickness: 1),
+                        SizedBox(height: 20),
+                        // Menu Items
+                        _buildMenuItem(
+                          icon: Icons.payment,
+                          label: 'Payments',
+                          onTap: () {
+                            Get.offNamed("/paymentMethods");
+                          },
+                        ),
+                        _buildMenuItem(
+                          icon: Icons.history,
+                          label: 'Ride History',
+                          onTap: () {
+                            Get.offNamed("/rideHistory");
+                          },
+                        ),
+                        _buildMenuItem(
+                          icon: Icons.local_offer,
+                          label: 'Promos',
+                          onTap: () {},
+                        ),
+                        _buildMenuItem(
+                          icon: Icons.card_membership,
+                          label: 'Ride Pass',
+                          onTap: () {},
+                        ),
+                        _buildMenuItem(
+                          icon: Icons.help,
+                          label: 'Help',
+                          onTap: () {
+                            Get.offNamed("/help");
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
+          ),
 
         ],
       ),
     ));
+  }
+  Widget _buildBottomSheetContent(BuildContext context) {
+    Widget _buildCustomButton({
+      required String buttonText,
+      required IconData icon,
+      required VoidCallback onTap,
+    }) {
+      return CustomButton(
+        width: MediaQuery.of(context).size.width * 1,
+        height: MediaQuery.of(context).size.height* 0.09,
+        buttonText: buttonText,
+        icon: icon,
+        iconSize: 30,
+        iconColor: Colors.black,
+        iconBackgroundColor: Colors.white,
+        textStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        gradientColors: [Colors.grey.shade200, Colors.grey.shade200],
+        onTap: onTap,
+        borderRadius: 15.0,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: const Offset(0, 3),
+            blurRadius: 6,
+          ),
+        ],
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 50,
+            height: 5,
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              color: Colors.grey[400],
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          const Text(
+            'Quick Support',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 15),
+          _buildCustomButton(
+            buttonText: 'Report Issue',
+            icon: Icons.report_gmailerrorred,
+            onTap: () {
+              Get.offNamed('/reportIssues');
+            },
+          ),
+          const SizedBox(height: 10),
+          _buildCustomButton(
+            buttonText: '+27 (63)8339927',
+            icon: Icons.phone,
+            onTap: () {
+              // Replace with actual phone call function
+              debugPrint("Calling +27 (63)8339927");
+            },
+          ),
+          const SizedBox(height: 10),
+          _buildCustomButton(
+            buttonText: 'FAQ',
+            icon: Icons.chat_rounded,
+            onTap: () {
+              Get.toNamed('/faqPage');
+            },
+          ),
+          const SizedBox(height: 10),
+          _buildCustomButton(
+            buttonText: 'How to Ride',
+            icon: Icons.my_library_books_sharp,
+            onTap: () {
+              Get.toNamed('/howToRidePage');
+            },
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
   }
 
   Widget _buildMenuItem({

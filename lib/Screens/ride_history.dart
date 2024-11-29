@@ -5,14 +5,14 @@ import '../Services/PayFast/payfast.dart';
 import 'Components/PaymentForm.dart';
 import 'Components/custom_button.dart';
 
-class TransactionHistory extends StatelessWidget {
+class RideHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: CustomAppBar(
-        title: 'Transaction History',
-        onBackPressed: () => Get.offNamed('/paymentMethods'),
+        title: 'Ride History',
+        onBackPressed: () => Get.offNamed('/home'),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

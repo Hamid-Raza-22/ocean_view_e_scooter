@@ -23,3 +23,4 @@ const googleIcon = "assets/icons/google.png";
 const facebookIcon = "assets/icons/facebook.png";
 const instagramIcon = "assets/icons/instagram.png";
 const twitterIcon = "assets/icons/twitter.png";
+const whatsappIcon = "assets/icons/whatsapp.png";

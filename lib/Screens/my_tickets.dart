@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ocean_view_e_scooters/Views/CustomWidgets/custom_appbar.dart';
-import '../Services/PayFast/payfast.dart';
-import 'Components/PaymentForm.dart';
-import 'Components/custom_button.dart';
 
-class TransactionHistory extends StatelessWidget {
+class MyTickets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: CustomAppBar(
-        title: 'Transaction History',
-        onBackPressed: () => Get.offNamed('/paymentMethods'),
+        title: 'My Tickets',
+        onBackPressed: () => Get.offNamed('/help'),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -27,7 +24,7 @@ class TransactionHistory extends StatelessWidget {
                 SizedBox(
                   width: double.infinity, // Ensures full width
                   child: Text(
-                    "No Record",
+                    "No Tickets",
                     textAlign: TextAlign.center, // Align text to the center
                     style: TextStyle(
                       color: Colors.white,
@@ -40,7 +37,7 @@ class TransactionHistory extends StatelessWidget {
                 SizedBox(
                   width: double.infinity, // Ensures full width
                   child: Text(
-                    "Please take a ride to start to see your stats",
+                    "Please take a Tickets to start to see your stats",
                     textAlign: TextAlign.center, // Align text to the center
                     style: TextStyle(
                       color: Colors.white,

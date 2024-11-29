@@ -47,15 +47,23 @@ class EditProfile extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   CustomEditableMenuOption(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    left: MediaQuery.of(context).size.width * 0.05,
+
+                    height: 80,
                     label: 'Account Name',
-                    initialValue: 'John Doe',
+                    initialValue: '',
                     onChanged: (value) {
                       print('Account Name updated to: $value');
                     },
                   ),
                   CustomEditableMenuOption(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    left: MediaQuery.of(context).size.width * 0.05,
+
+                    height: 80,
                     label: 'Email Address',
-                    initialValue: 'user@example.com',
+                    initialValue: '',
                     onChanged: (value) {
                       print('Email Address updated to: $value');
                     },
