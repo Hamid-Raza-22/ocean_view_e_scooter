@@ -597,7 +597,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         _buildMenuItem(
                           icon: Icons.local_offer,
                           label: 'Promos',
-                          onTap: () {},
+                          onTap: () {
+                            Get.offNamed("/adminPanel");
+                          },
                         ),
                         _buildMenuItem(
                           icon: Icons.card_membership,
